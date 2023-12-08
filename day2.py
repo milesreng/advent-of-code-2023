@@ -9,22 +9,23 @@ with open('data/day2.txt') as f:
     game_id = int(game_id.split(" ")[1])
 
     subsets = results.split(";")
-    valid = True
 
     # green, red, blue
+    minimums = [0, 0, 0]
+
     for set in subsets:
       quantities = set.strip().split(",")
 
       for amt in quantities:
         num, color = amt.strip().split(" ")
-        if color == "green" and int(num) > 13:
-          valid = False
-        elif color == "red" and int(num) > 12:
-          valid = False
-        elif color == "blue" and int(num) > 14:
-          valid = False
+        if color == "green":
+          minimums[0] = max(minimums[0], int(num))
+        elif color == "red":
+          minimums[1] = max(minimums[1], int(num))
+        elif color == "blue":
+          minimums[2] = max(minimums[2], int(num))
 
-    if valid:
-      count += game_id
+    power = minimums[0] * minimums[1] * minimums[2]
+    count += power
 
   print(count)
